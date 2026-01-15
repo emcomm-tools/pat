@@ -61,6 +61,19 @@ class ConnectModal {
     // Initialize RMS list manager
     this.rmslistView.init();
     this.rmslistView.onRowClick = (url) => this.setConnectValues(url);
+
+    // NEW: Read URL parameters and pre-set transport
+    const urlParams = new URLSearchParams(window.location.search);
+    const modeParam = urlParams.get('mode');
+    if (modeParam) {
+      setTimeout(() => {
+        $('#transportSelect').val(modeParam);
+        $('#transportSelect').prop('disabled', true);
+        $('#transportSelect').selectpicker('refresh');
+        $('#transportSelect').trigger('change');
+      }, 100);
+    }
+
     $('#connectModal').on('hidden.bs.modal', () => this.rmslistView.reset());
 
     $('#transportSelect').change((e) => {

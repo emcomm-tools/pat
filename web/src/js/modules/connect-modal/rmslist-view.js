@@ -15,6 +15,21 @@ class RmslistView {
   }
 
   init() {
+    // NEW: Read URL parameters and pre-set filters
+    const urlParams = new URLSearchParams(window.location.search);
+    const modeParam = urlParams.get('mode');
+    const bandParam = urlParams.get('band');
+
+    if (modeParam) {
+      $('#modeSearchSelect').val(modeParam);
+      $('#modeSearchSelect').prop('disabled', true);
+      $('#modeSearchSelect').selectpicker('refresh');
+    }
+    if (bandParam) {
+      $('#bandSearchSelect').val(bandParam);
+      $('#bandSearchSelect').selectpicker('refresh');
+    }
+
     $('#targetFilterInput').on('input', () => this.filterRmslist());
     $('#loadmore-btn').click(() => {
       this.loadMoreItems();
